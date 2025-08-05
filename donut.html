@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>For You</title>
+  <style>
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    body {
+      background: linear-gradient(to bottom, #fff0f5, #ffe4e1);
+      font-family: 'Georgia', serif;
+      margin: 0;
+      padding: 20px;
+      color: #4b2e2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page {
+      display: none;
+      width: 100%;
+      max-width: 600px;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .donut-img {
+      width: 140px;
+      margin: 100px auto 20px;
+      display: block;
+      animation: spinSlow 10s linear infinite;
+      cursor: pointer;
+    }
+
+    .btn-start {
+      background-color: #b56576;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .story-text {
+      text-align: center;
+      font-size: 1.2em;
+      margin: 80px auto;
+      padding: 0 20px;
+      min-height: 140px;
+      cursor: pointer;
+    }
+
+    .container {
+      background-color: #ffffffdd;
+      padding: 30px 20px;
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 1s ease forwards;
+      margin-top: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #b56576;
+      font-size: 2.2em;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+      animation-fill-mode: forwards;
+    }
+
+    p:nth-of-type(1) { animation-delay: 0.5s; }
+    p:nth-of-type(2) { animation-delay: 1s; }
+    p:nth-of-type(3) { animation-delay: 1.5s; }
+    p:nth-of-type(4) { animation-delay: 2s; }
+    p:nth-of-type(5) { animation-delay: 2.5s; }
+    p:nth-of-type(6) { animation-delay: 3s; }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-style: italic;
+      color: #a67c7c;
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 3.5s;
+    }
+
+    #final-msg {
+      text-align: center;
+      font-size: 1.2em;
+      color: #8b3a3a;
+      margin-top: 20px;
+      animation: fadeInUp 1s ease forwards;
+    }
+  </style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <img src="https://cdn-icons-png.flaticon.com/128/2876/2876156.png" alt="Donut" class="donut-img" />
+  <button class="btn-start" onclick="startStory()">Tap the Donut</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <div class="story-text" id="storyText" onclick="nextLine()">
+    Tap to begin the story...
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+  <div class="container">
+    <h1>One More Bite </h1>
+    <p>i remembered you love this kind of donut — soft, sweet, simple.</p>
+    <p>but this one’s a little different.</p>
+    <p>i made it with my own hands, hoping you’ll taste not just sugar, but also the effort, the regret, and the quiet hope I’m still holding onto.</p>
+    <p>i know I broke something precious. TRUST — maybe “us.”</p>
+    <p>there’s a hole in the middle, like the space between us now, but even with that emptiness, this donut still holds its shape. And I want us to do the same.</p>
+    <p>if you’re willing, I’d love to fill that space — not with promises, but with actions. one small bite at a time.</p>
+    <div id="final-msg"> i donut want to lose you. Ever. 🍩</div>
+    <div class="footer">with all my heart,<br>nayo</div>
+  </div>
+</div>
+
+<audio id="bg-music" src="https://cdn.pixabay.com/audio/2023/03/08/audio_4171fa00f3.mp3" preload="auto"></audio>
+
+<script>
+  const page1 = document.getElementById('page1');
+  const page2 = document.getElementById('page2');
+  const page3 = document.getElementById('page3');
+  const storyText = document.getElementById('storyText');
+  const bgMusic = document.getElementById('bg-music');
+
+  const storyLines = [
+    "you said you liked sweet things...",
+    "but latetly, all i've given you is betterness, haven't I?",
+    "I know this might feel silly...",
+    "but sometimes, sweet things carry the weight of what we can’t say.",
+    "this donut? it’s not just dessert.",
+    "it’s a message. a memory. maybe even a mending.",
+    "i hope... as you read this, you’ll feel that too.",
+  ];
+
+  let index = 0;
+
+  function startStory() {
+    page1.classList.remove('active');
+    page2.classList.add('active');
+    storyText.innerText = storyLines[0];
+    bgMusic.play();
+  }
+
+  function nextLine() {
+    index++;
+    if (index < storyLines.length) {
+      storyText.innerText = storyLines[index];
+    } else {
+      // End of story → show final page
+      page2.classList.remove('active');
+      page3.classList.add('active');
+    }
+  }
+</script>
+</body>
+</html>
